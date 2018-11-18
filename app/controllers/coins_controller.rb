@@ -1,10 +1,9 @@
 require_dependency 'crypto_compare.rb'
 require 'date' 
 
-# The CoinsController class is responsible for supplying the app data to the coins view
 class CoinsController < ApplicationController
-    include ActiveModel::Dirty
-before_filter :authenticate_user!
+  include ActiveModel::Dirty
+  before_filter :authenticate_user!
   
   def index
     @coin = Coin.get_coins
@@ -22,6 +21,23 @@ before_filter :authenticate_user!
     #@prices = @graphData.map {|x| x.values[1]}
      
     @exchange = @exchange.nil? ? "No data available please report to the site owners": "#{@q} (#{@input})" +" = " + "#{ (@q * @exchange)} (#{@output})"
+    add_assets
+      
+  end
+  
+  
+  
+  def add_assets
+    a = current_user.assets
+     #b = a.gsub(/[{}:]/,'').split(', ').map{|h| h1,h2 = h.split('=>'); {h1 => h2}}.reduce(:merge) 
+     b = JSON.parse a.gsub('=>', ':')
+      b =  b.inspect 
+    b = JSON.parse b.gsub('=>', ':') 
+     b[@input] = @q.to_i
+       current_user.assets = b.inspect 
+       current_user.save
+       
+       @user_assets = JSON.parse current_user.assets.gsub('=>', ':')
 
   end
   

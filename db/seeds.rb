@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user1 = User.create :email => "sample@gmail.com", :password => "somepassword"
+user1 = User.create :email => "sample@gmail.com", :password => "somepassword", :assets => {"LTC" => 3}
 
 coins = [{:currency => 'ETH', :name => 'Ethereum', :symbol => '/media/20646/eth_logo.png'},
 {:currency => 'LTC', :name => 'Litecoin', :symbol => '/media/19782/litecoin-logo.png'},
